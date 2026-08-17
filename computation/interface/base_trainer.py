@@ -1,15 +1,22 @@
-from abc import ABC,abstractmethod
+from abc import ABC, abstractmethod
+from base_model import BaseModel
+
 
 class BaseTrainer(ABC):
     """
-        PROPERTIES:
-            Model,Dataset,Optimizer and loss function
-        TASK:
-            Perform local training 
-        RETURN:
-            Loss  
+    Properties:
+        Dataset, Optimizer, Loss Function
+
+    Task:
+        Perform local training.
+
+    Input:
+        Model
+
+    Return:
+        Trained Model
     """
-    
+
     @abstractmethod
-    def train(self,local_epoch:int) -> float :
+    def train(self, local_epoch: int, model: BaseModel) -> BaseModel:
         pass
