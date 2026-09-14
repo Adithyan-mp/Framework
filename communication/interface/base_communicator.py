@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
-from message import Message
+from communication.interface.message import Message
+import torch
 
 
 class BaseCommunicator(ABC):
@@ -13,11 +14,11 @@ class BaseCommunicator(ABC):
         pass
 
     @abstractmethod
-    def send(self, message: Message, destination: int) -> None:
+    def send(self, message: Message) -> None:
         pass
 
     @abstractmethod
-    def recv(self, source: int) -> Message:
+    def recv(self, message: Message) -> Message:
         pass
 
     @abstractmethod
@@ -25,5 +26,5 @@ class BaseCommunicator(ABC):
         pass
 
     @abstractmethod
-    def all_gather(self, message: Message) -> list[Message]:
+    def all_gather(self, message: Message) -> list[torch.Tensor]:
         pass

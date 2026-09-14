@@ -2,7 +2,6 @@ from config.schema.communicator_config import TorchCommunicatorConfig
 
 import yaml
 from datetime import timedelta
-import os
 
 
 class LoadConfig:
@@ -19,7 +18,7 @@ class LoadConfig:
 
         communication = self.config_data["communication"]
 
-        torch_communicator = TorchCommunicatorConfig(
+        return TorchCommunicatorConfig(
             rank=communication["rank"],
             world_size=communication["world_size"],
             master_addr=communication["master_addr"],
@@ -40,18 +39,3 @@ class LoadConfig:
                 else None
             ),
         )
-
-        # if torch_communicator.nccl_socket_ifname:
-        #     os.environ["NCCL_SOCKET_IFNAME"] = (
-        #         torch_communicator.nccl_socket_ifname
-        #     )
-
-        # if torch_communicator.gloo_socket_ifname:
-        #     os.environ["GLOO_SOCKET_IFNAME"] = (
-        #         torch_communicator.gloo_socket_ifname
-        #     )
-
-        # os.environ["MASTER_ADDR"] = torch_communicator.master_addr
-        # os.environ["MASTER_PORT"] = torch_communicator.master_port
-
-        return torch_communicator
