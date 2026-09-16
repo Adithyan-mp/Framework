@@ -11,39 +11,45 @@ class TorchCommunicator(BaseCommunicator):
 
         config_loader = LoadConfig(fname=fname)
 
-        self.config_data = (
+        self._config_data = (
             config_loader.load_torch_communicator_config()
         )
 
         self._configure_environment()
+        
+    def get_rank(self):
+        return self._config_data.rank
+    
+    def get_world_size(self):
+        return self._config_data.world_size
 
     def _configure_environment(self):
 
-        if self.config_data.nccl_socket_ifname:
+        if self._config_data.nccl_socket_ifname:
             os.environ["NCCL_SOCKET_IFNAME"] = (
-                self.config_data.nccl_socket_ifname
+                self._config_data.nccl_socket_ifname
             )
 
-        if self.config_data.gloo_socket_ifname:
+        if self._config_data.gloo_socket_ifname:
             os.environ["GLOO_SOCKET_IFNAME"] = (
-                self.config_data.gloo_socket_ifname
+                self._config_data.gloo_socket_ifname
             )
 
         os.environ["MASTER_ADDR"] = (
-            self.config_data.master_addr
+            self._config_data.master_addr
         )
 
         os.environ["MASTER_PORT"] = str(
-            self.config_data.master_port
+            self._config_data.master_port
         )
 
     def init(self):
 
         dist.init_process_group(
-            backend=self.config_data.backend,
-            rank=self.config_data.rank,
-            world_size=self.config_data.world_size,
-            timeout=self.config_data.timeout,
+            backend=self._config_data.backend,
+            rank=self._config_data.rank,
+            world_size=self._config_data.world_size,
+            timeout=self._config_data.timeout,
         )
 
     def terminate(self):
@@ -100,7 +106,7 @@ class TorchCommunicator(BaseCommunicator):
         if message.payload is None:
             raise ValueError("Message payload is required")
         
-        gather_message = [torch.empty_like(message.payload) for _ in range(self.config_data.world_size)]
+        gather_message = [torch.empty_like(message.payload) for _ in range(self._config_data.world_size)]
         
         dist.all_gather(gather_message,message.payload)
                 
