@@ -387,5 +387,6 @@ def gpu_all_gather_test():
     communicator.terminate()
     
 if __name__ == "__main__":
-    invalid_source_test()
-    invalid_payload_test()
+    gpu_send_recv_test()
+    gpu_all_gather_test()
+    gpu_broadcast_test()
