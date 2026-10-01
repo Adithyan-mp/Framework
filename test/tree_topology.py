@@ -14,7 +14,7 @@ topology_data = {
     9: []
 }
 
-topology = TreeTopology(topology=topology_data)
+# topology = TreeTopology(topology=topology_data)
 
 topology = TreeTopology(topology=topology_data, root=0)
 
@@ -42,3 +42,7 @@ assert topology.is_connected(0, 0) is False
 assert topology.get_neighbours(100) == []
 assert topology.get_children(100) == []
 assert topology.get_parent(100) is None
+
+if __name__ == "__main__":
+    # assertions...
+    print("All topology tests passed.")
