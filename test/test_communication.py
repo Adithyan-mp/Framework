@@ -387,4 +387,4 @@ def gpu_all_gather_test():
     communicator.terminate()
     
 if __name__ == "__main__":
-    send_recv_test()
+    send_recv_test2()
