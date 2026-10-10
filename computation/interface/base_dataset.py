@@ -1,10 +1,6 @@
-from abc import ABC ,abstractmethod
+from abc import ABC
+from torch.utils.data import Dataset
 
-class BaseDataset(ABC):
-    @abstractmethod
-    def __len__(self):
-        pass
-    
-    @abstractmethod
-    def __getitem__(self, index):
-        pass
+
+class BaseDataset(Dataset, ABC):
+    pass
