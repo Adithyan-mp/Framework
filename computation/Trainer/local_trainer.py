@@ -1,4 +1,5 @@
 from computation.interface.base_trainer import BaseTrainer
+from computation.interface.base_model import BaseModel
 
 
 class LocalTrainer(BaseTrainer):
@@ -7,7 +8,7 @@ class LocalTrainer(BaseTrainer):
         self.dataloader=dataloader
         self.optim = optim
         
-    def train(self, local_epoch, model):
+    def train(self, local_epoch, model:BaseModel):
         model.train()
         
         for i in range(local_epoch):

@@ -1,19 +1,18 @@
-from abc import ABC,abstractmethod
+from abc import ABC, abstractmethod
+import torch
 
-class BaseModel(ABC):
+
+class BaseModel(torch.nn.Module, ABC):
 
     @abstractmethod
     def forward(self, x):
         pass
 
-    @abstractmethod
     def get_parameters(self):
-        pass
+        return self.parameters()
 
-    @abstractmethod
     def get_weights(self):
-        pass
+        return self.state_dict()
 
-    @abstractmethod
     def set_weights(self, weights):
-        pass
+        self.load_state_dict(weights)
