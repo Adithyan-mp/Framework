@@ -1,5 +1,5 @@
 from config.schema.communicator_config import TorchCommunicatorConfig
-
+from config.schema.optimization_config import OptimConfig
 import yaml
 from datetime import timedelta
 
@@ -39,3 +39,11 @@ class LoadConfig:
                 else None
             ),
         )
+        
+        
+    def load_torch_optim_config(self):
+        optim = self.config_data["optimizer"]
+        
+        return OptimConfig(name=optim['name'],lr=optim['lr'],args=optim.get('args',{}))
+        
+        
