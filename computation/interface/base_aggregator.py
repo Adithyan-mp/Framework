@@ -13,5 +13,16 @@ class BaseAggregator(ABC):
     """
 
     @abstractmethod
-    def aggregate(self, weights: list[Any]) -> Any:
+    def aggregate(self, weight: list[Any]) :
+        """aggregrate logic"""
+        pass
+    
+    @abstractmethod
+    def finalize(self) -> list[Any] :
+        """return the final updated weight"""
+        pass
+        
+    @abstractmethod
+    def reset(self):
+        """reset the parameters"""
         pass
