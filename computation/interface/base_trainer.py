@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from base_model import BaseModel
+from computation.interface.base_model import BaseModel
 
 
 class BaseTrainer(ABC):
@@ -18,5 +18,5 @@ class BaseTrainer(ABC):
     """
 
     @abstractmethod
-    def train(self, local_epoch: int, model: BaseModel) -> BaseModel:
+    def train(self, dataloader,local_epoch: int, model: BaseModel) -> None:
         pass

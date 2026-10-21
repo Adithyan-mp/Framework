@@ -1,31 +1,27 @@
 from abc import ABC, abstractmethod
 
-from computation.interface.base_trainer import BaseTrainer
-from computation.interface.base_aggregator import BaseAggregator
-from communication.interface.base_communicator import BaseCommunicator
+from computation.interface.base_model import BaseModel
+from config.loader.load_config import LoadConfig
 
 
 class BaseScheduler(ABC):
     """
-    Properties:
-        Trainer
-        Aggregator
-        Communicator
+    Base class for federated learning schedulers.
 
-    Task:
-        Maintain the overall FL workflow.
+    Responsibilities:
+        - Maintain the model and configuration.
+        - Define the interface for executing the FL workflow.
     """
 
     def __init__(
         self,
-        trainer: BaseTrainer,
-        aggregator: BaseAggregator,
-        communicator: BaseCommunicator
+        model: BaseModel,
+        config: str,
     ):
-        self.trainer = trainer
-        self.aggregator = aggregator
-        self.communicator = communicator
+        self.model = model
+        self.config = LoadConfig(fname=config)
 
     @abstractmethod
     def run(self) -> None:
+        """Execute the federated learning workflow."""
         pass

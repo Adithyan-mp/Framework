@@ -3,18 +3,19 @@ from computation.interface.base_model import BaseModel
 
 
 class LocalTrainer(BaseTrainer):
-    def __init__(self,dataloader,loss,optim):
+    def __init__(self,loss,optim):
         self.loss_fn = loss
-        self.dataloader=dataloader
         self.optim = optim
         
-    def train(self, local_epoch, model:BaseModel):
-        model.train()
+    def train(self, dataloader,local_epoch:int, model:BaseModel):
+        if local_epoch <= 0:
+            raise ValueError(f"Local Epoch must be positive")
         
+        model.train()
         for i in range(local_epoch):
             total_loss = 0.0
             batch = 0
-            for x,y in self.dataloader:
+            for x,y in dataloader:
                 self.optim.zero_grad()
                 pred = model(x)
                 loss = self.loss_fn(pred,y)
