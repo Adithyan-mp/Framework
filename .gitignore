@@ -1,1 +1,8 @@
 venv/
+DockerFile
+requirement.txt
+.dockerignore
+v1_unit_test/
+Dockerfile
+requirement.txt
+result.txt

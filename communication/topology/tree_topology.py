@@ -1,14 +1,14 @@
 from communication.interface.base_topology import BaseTopology
-
+from config.loader.load_config import LoadConfig
 class TreeTopology(BaseTopology):
 
     def __init__(
         self,
-        topology: dict[int, list[int]],
-        root: int
+        config_loader:LoadConfig
     ):
-        self.topology = topology
-        self.root = root
+        self.config_data = config_loader.load_tree_topology()
+        self.topology = self.config_data.data
+        self.root =  self.config_data.root
 
     def get_neighbours(self, node: int) -> list[int]:
         neighbours = self.topology.get(node, []).copy()

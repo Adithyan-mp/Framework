@@ -45,13 +45,13 @@ class LoadConfig:
     def load_torch_optim_config(self):
         optim = self.config_data["optimizer"]
         
-        return OptimConfig(optimizer=optim['optimizer'],lr=optim['lr'],args=optim.get('args',{}))
+        return OptimConfig(optimizer=optim['optimizer_name'],lr=optim['lr'],args=optim.get('args',{}))
     
     def load_tree_topology(self):
         topology = self.config_data["topology"]
         return TreeConfig(name=topology['name'],root=topology['root'],data=topology['data'])
         
     def load_train_params(self):
-        params = self.config_data['training params']
+        params = self.config_data['training_params']
         return TrainConfig(loss=params['loss'],epoch=params['epoch'],local_epoch=params['local_epoch'],batch_size=params['batch_size'])
         

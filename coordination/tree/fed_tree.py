@@ -52,13 +52,12 @@ class FedTree(BaseScheduler):
             if communicator is not None
             else TorchCommunicator(self.config)
         )
-
         # Topology
         self.topology = (
             topology
             if topology is not None
             else TreeTopology(
-                self.config.load_tree_topology().data
+                self.config
             )
         )
 
