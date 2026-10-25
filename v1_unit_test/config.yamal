@@ -1,0 +1,27 @@
+communication:
+  rank: 3
+  world_size: 4
+  master_addr: "node0"
+  master_port: 21500
+  backend: "gloo"
+  gloo_socket_ifname: "eth0"
+  timeout: 60
+
+optimizer:
+  optimizer_name: "Adam"
+  lr: 0.01
+
+topology:
+  name: "tree"
+  root: 0
+  data:
+    0: [1,2]
+    1: []
+    2: [3]
+    3: []
+
+training_params:
+  loss: "CrossEntropyLoss"
+  epoch: 5
+  local_epoch: 5
+  batch_size: 32
