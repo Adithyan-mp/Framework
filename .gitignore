@@ -6,3 +6,5 @@ venv/
 # Dockerfile
 # requirement.txt
 # result.txt
+test.py
+test_config.yamal

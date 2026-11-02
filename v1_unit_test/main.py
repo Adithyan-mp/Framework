@@ -2,6 +2,7 @@ from computation.interface.base_dataset import BaseDataset
 from computation.interface.base_model import BaseModel
 from coordination.tree.fed_tree import FedTree
 
+import sys
 import pandas as pd
 import torch
 import torch.nn as nn
@@ -58,28 +59,32 @@ class MyData(BaseDataset):
 
 
 if __name__ == "__main__":
-    dataset = MyData("./v1_unit_test/Iris_c.csv")
+    if len(sys.argv) != 2:
+        print(f"Required config path")
+    else:
+        path = sys.argv[1]
+        dataset = MyData("./v1_unit_test/Iris_c.csv")
 
-    loader = DataLoader(
-        dataset=dataset,
-        batch_size=32,
-        shuffle=True,
-    )
+        loader = DataLoader(
+            dataset=dataset,
+            batch_size=32,
+            shuffle=True,
+        )
 
-    model = MyModel()
+        model = MyModel()
 
-    # Check the model and dataset before running FedTree
-    features, labels = next(iter(loader))
-    outputs = model(features)
+        # Check the model and dataset before running FedTree
+        features, labels = next(iter(loader))
+        outputs = model(features)
 
-    print("Dataset size:", len(dataset))
-    print("Feature shape:", features.shape)
-    print("Label shape:", labels.shape)
-    print("Model output shape:", outputs.shape)
+        print("Dataset size:", len(dataset))
+        print("Feature shape:", features.shape)
+        print("Label shape:", labels.shape)
+        print("Model output shape:", outputs.shape)
 
-    coordinator = FedTree(
-        model=model,
-        config="./v1_unit_test/config.yamal",
-    )
+        coordinator = FedTree(
+            model=model,
+            config=path,
+        )
 
-    coordinator.run(dataloader=loader)
+        coordinator.run(dataloader=loader)
