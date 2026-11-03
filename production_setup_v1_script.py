@@ -1,4 +1,3 @@
-
 import subprocess
 
 machines = [
@@ -9,30 +8,41 @@ machines = [
     '172.16.64.41'
 ]
 
+successful = []
+failed = []
+
+commands = """
+mkdir -p adi &&
+cd adi &&
+git clone -b production https://github.com/Adithyan-mp/Framework.git &&
+cd Framework &&
+python3 -m venv venv &&
+./venv/bin/pip install -r requirements.txt
+"""
+
 for ip in machines:
-    print(f"Machine {ip} started initializing")
+    print(f"Machine {ip} started initializing", flush=True)
 
-    commands = (
-        "mkdir -p adi && "
-        "cd adi && "
-        "git clone -b production https://github.com/Adithyan-mp/Framework.git && "
-        "cd Framework && "
-        "python3 -m venv venv && "
-        "./venv/bin/pip install -r requirements.txt"
-    )
+    try:
+        res = subprocess.run(
+            ['ssh', ip, 'bash', '-lc', commands],
+            timeout=1800
+        )
 
-    res = subprocess.run(
-        ['ssh', ip, 'bash', '-lc', commands],
-        capture_output=True,
-        text=True
-    )
+        if res.returncode == 0:
+            print(f"Successfully initialized machine {ip}")
+            successful.append(ip)
+        else:
+            print(f"Failed to initialize machine {ip}")
+            failed.append(ip)
 
-    if res.returncode == 0:
-        print(f"Successfully initialized machine {ip}")
-        print(res.stdout)
-    else:
-        print(f"Failed to initialize machine {ip}")
-        print(res.stderr)
-        raise RuntimeError(f"Initialization failed on {ip}")
+    except subprocess.TimeoutExpired:
+        print(f"Machine {ip} initialization timed out")
+        failed.append(ip)
 
     print("=" * 50)
+
+
+print("\nINITIALIZATION SUMMARY")
+print(f"Successful machines: {successful}")
+print(f"Failed machines: {failed}")

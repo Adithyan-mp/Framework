@@ -14,12 +14,10 @@ processes = []
 
 for i, ip in enumerate(machines):
 
-    command = (
-        "cd /adi/Framework && "
-        "source venv/bin/activate && "
-        f"python3 -m v1_unit_test.main "
-        f"v1_unit_test/config/config_{i}.yamal"
-    )
+    command = f"""cd /adi/Framework && 
+        source venv/bin/activate && 
+        python3 -m v1_unit_test.main 
+        f"v1_unit_test/config/config_{i}.yamal"""
 
     print(f"Launching rank {i} on {ip}")
 
