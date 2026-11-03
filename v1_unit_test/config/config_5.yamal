@@ -1,6 +1,6 @@
 communication:
   rank: 5
-  world_size: 6
+  world_size: 5
   master_addr: "172.16.64.39"
   master_port: 21500
   backend: "gloo"
@@ -17,10 +17,9 @@ topology:
   data:
     0: [1, 2]
     1: [3]
-    2: [4, 5]
+    2: [4]
     3: []
     4: []
-    5: []
 
 training_params:
   loss: "CrossEntropyLoss"
